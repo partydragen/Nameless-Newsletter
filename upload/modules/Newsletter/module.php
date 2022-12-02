@@ -20,7 +20,7 @@ class Newsletter_Module extends Module {
 
         $name = 'Newsletter';
         $author = '<a href="https://partydragen.com" target="_blank" rel="nofollow noopener">Partydragen</a>';
-        $module_version = '1.0.0';
+        $module_version = '1.0.1';
         $nameless_version = '2.0.2';
 
         parent::__construct($this, $name, $author, $module_version, $nameless_version);
