@@ -7,7 +7,7 @@
             </div>
             <div class="form-group">
                 <input type="hidden" name="action" value="newsletter_subscribe">
-                <input type="hidden" name="token" value="{$TOKEN}">
+                <input type="hidden" name="token" value="{$NEWSLETTER_TOKEN}">
                 <button type="submit" value="{$SUBSCRIBE}" class="btn btn-theme other-btn">{$SUBSCRIBE}</button>
             </div>
         </form>

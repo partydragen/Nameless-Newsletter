@@ -102,7 +102,7 @@ class Newsletter_Module extends Module {
             }
         } else {
             $smarty->assign([
-                'TOKEN' => Token::get(),
+                'NEWSLETTER_TOKEN' => Token::get(),
                 'NEWSLETTER' => $this->_newsletter_language->get('general', 'newsletter'),
                 'NEWSLETTER_SUBSCRIBE_LINK' => URL::build('/newsletter/subscribe'),
                 'YOUR_EMAIL_ADDRESS' => $this->_newsletter_language->get('general', 'your_email_address'),

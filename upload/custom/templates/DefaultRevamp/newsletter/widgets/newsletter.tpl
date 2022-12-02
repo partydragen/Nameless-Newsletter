@@ -7,7 +7,7 @@
             </div>
             <div class="field">
                 <input type="hidden" name="action" value="newsletter_subscribe">
-                <input type="hidden" name="token" value="{$TOKEN}">
+                <input type="hidden" name="token" value="{$NEWSLETTER_TOKEN}">
                 <input type="submit" value="{$SUBSCRIBE}" class="ui primary button">
             </div>
         </form>
