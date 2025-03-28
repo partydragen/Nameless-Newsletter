@@ -57,7 +57,7 @@ if ($user->isLoggedIn() || Cookie::exists('alert-box')) {
     }
 }
 
-$smarty->assign([
+$template->getEngine()->addVariables([
     'NEWSLETTER' => $newsletter_language->get('general', 'newsletter'),
     'UNSUBSCRIBE' => $newsletter_language->get('general', 'unsubscribe'),
     'TOKEN' => Token::get(),
@@ -71,7 +71,7 @@ $content = EventHandler::executeEvent('renderCustomPage', [
     'skip_purify' => true
 ])['content'];
 
-$smarty->assign([
+$template->getEngine()->addVariables([
     'NEWSLETTER' => $newsletter_language->get('general', 'newsletter'),
     'WIDGETS_LEFT' => $widgets->getWidgets('left'),
     'WIDGETS_RIGHT' => $widgets->getWidgets('right'),
@@ -84,4 +84,4 @@ require(ROOT_PATH . '/core/templates/navbar.php');
 require(ROOT_PATH . '/core/templates/footer.php');
 
 // Display template
-$template->displayTemplate('newsletter/newsletter.tpl', $smarty);
+$template->displayTemplate('newsletter/newsletter');

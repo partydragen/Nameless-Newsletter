@@ -35,12 +35,12 @@ if (!isset($_GET['action'])) {
             ];
         }
 
-        $smarty->assign('SUBSCRIBERS_LIST', $subscribers_list);
+        $template->getEngine()->addVariable('SUBSCRIBERS_LIST', $subscribers_list);
     } else {
-        $smarty->assign('NO_SUBSCRIBERS', $newsletter_language->get('general', 'no_subscribers'));
+        $template->getEngine()->addVariable('NO_SUBSCRIBERS', $newsletter_language->get('general', 'no_subscribers'));
     }
 
-    $smarty->assign([
+    $template->getEngine()->addVariables([
         'RECENT_NEWSLETTERS' => $newsletter_language->get('general', 'recent_newsletters'),
         'SUBSCRIBERS' => $newsletter_language->get('general', 'subscribers_x', [
             'subscribers' => DB::getInstance()->query('SELECT COUNT(*) as c FROM nl2_newsletter_subscribers')->first()->c
@@ -85,18 +85,18 @@ if (Session::exists('newsletter_success'))
     $success = Session::flash('newsletter_success');
 
 if (isset($success))
-    $smarty->assign([
+    $template->getEngine()->addVariables([
         'SUCCESS' => $success,
         'SUCCESS_TITLE' => $language->get('general', 'success')
     ]);
 
 if (isset($errors) && count($errors))
-    $smarty->assign([
+    $template->getEngine()->addVariables([
         'ERRORS' => $errors,
         'ERRORS_TITLE' => $language->get('general', 'error')
     ]);
 
-$smarty->assign([
+$template->getEngine()->addVariables([
 	'PARENT_PAGE' => PARENT_PAGE,
 	'DASHBOARD' => $language->get('admin', 'dashboard'),
 	'NEWSLETTER' => $newsletter_language->get('general', 'newsletter'),
@@ -110,4 +110,4 @@ $template->onPageLoad();
 require(ROOT_PATH . '/core/templates/panel_navbar.php');
 
 // Display template
-$template->displayTemplate('newsletter/subscribers.tpl', $smarty);
+$template->displayTemplate('newsletter/subscribers');

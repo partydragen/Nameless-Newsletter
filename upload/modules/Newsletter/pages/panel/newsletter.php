@@ -38,12 +38,12 @@ if (!isset($_GET['action'])) {
             ];
         }
 
-        $smarty->assign('NEWSLETTER_LIST', $newsletter_list);
+        $template->getEngine()->addVariable('NEWSLETTER_LIST', $newsletter_list);
     } else {
-        $smarty->assign('NO_RECENT_NEWSLETTERS', $newsletter_language->get('general', 'no_recent_newsletters'));
+        $template->getEngine()->addVariable('NO_RECENT_NEWSLETTERS', $newsletter_language->get('general', 'no_recent_newsletters'));
     }
 
-    $smarty->assign([
+    $template->getEngine()->addVariables([
         'NEW_NEWSLETTER' => $newsletter_language->get('general', 'new_newsletter'),
         'NEW_NEWSLETTER_LINK' => URL::build('/panel/newsletter', 'action=new'),
         'RECENT_NEWSLETTERS' => $newsletter_language->get('general', 'recent_newsletters'),
@@ -59,7 +59,7 @@ if (!isset($_GET['action'])) {
         'DELETE_LINK' => URL::build('/panel/newsletter', 'action=delete'),
     ]);
 
-    $template_file = 'newsletter/newsletter.tpl';
+    $template_file = 'newsletter/newsletter';
 } else {
     switch ($_GET['action']) {
         case 'new';
@@ -181,7 +181,7 @@ if (!isset($_GET['action'])) {
                 }
             }
 
-            $smarty->assign([
+            $template->getEngine()->addVariables([
                 'CREATING_NEWSLETTER' => $newsletter_language->get('general', 'creating_newsletter'),
                 'BACK' => $language->get('general', 'back'),
                 'BACK_LINK' => URL::build('/panel/newsletter'),
@@ -195,7 +195,7 @@ if (!isset($_GET['action'])) {
 
             $template->addJSScript(Input::createTinyEditor($language, 'inputContent', null, false, true));
 
-            $template_file = 'newsletter/newsletter_new.tpl';
+            $template_file = 'newsletter/newsletter_new';
         break;
         case 'edit';
             // Edit newsletter
@@ -244,7 +244,7 @@ if (!isset($_GET['action'])) {
                 }
             }
 
-            $smarty->assign([
+            $template->getEngine()->addVariables([
                 'CREATING_NEWSLETTER' => $newsletter_language->get('general', 'creating_newsletter'),
                 'BACK' => $language->get('general', 'back'),
                 'BACK_LINK' => URL::build('/panel/newsletter'),
@@ -260,7 +260,7 @@ if (!isset($_GET['action'])) {
 
             $template->addJSScript(Input::createTinyEditor($language, 'inputContent', null, false, true));
 
-            $template_file = 'newsletter/newsletter_edit.tpl';
+            $template_file = 'newsletter/newsletter_edit';
         break;
         case 'delete':
             if (Input::exists()) {
@@ -289,18 +289,18 @@ if (Session::exists('newsletter_success'))
     $success = Session::flash('newsletter_success');
 
 if (isset($success))
-    $smarty->assign([
+    $template->getEngine()->addVariables([
         'SUCCESS' => $success,
         'SUCCESS_TITLE' => $language->get('general', 'success')
     ]);
 
 if (isset($errors) && count($errors))
-    $smarty->assign([
+    $template->getEngine()->addVariables([
         'ERRORS' => $errors,
         'ERRORS_TITLE' => $language->get('general', 'error')
     ]);
 
-$smarty->assign([
+$template->getEngine()->addVariables([
 	'PARENT_PAGE' => PARENT_PAGE,
 	'DASHBOARD' => $language->get('admin', 'dashboard'),
 	'NEWSLETTER' => $newsletter_language->get('general', 'newsletter'),
@@ -314,4 +314,4 @@ $template->onPageLoad();
 require(ROOT_PATH . '/core/templates/panel_navbar.php');
 
 // Display template
-$template->displayTemplate($template_file, $smarty);
+$template->displayTemplate($template_file);

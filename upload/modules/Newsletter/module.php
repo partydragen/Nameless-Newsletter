@@ -2,7 +2,7 @@
 /*
  *  Made by Partydragen
  *  https://github.com/partydragen/Nameless-Newsletter
- *  NamelessMC version 2.1.0
+ *  NamelessMC version 2.2.0
  *
  *  License: MIT
  *
@@ -21,7 +21,7 @@ class Newsletter_Module extends Module {
         $name = 'Newsletter';
         $author = '<a href="https://partydragen.com" target="_blank" rel="nofollow noopener">Partydragen</a>';
         $module_version = '1.0.2';
-        $nameless_version = '2.1.0';
+        $nameless_version = '2.2.0';
 
         parent::__construct($this, $name, $author, $module_version, $nameless_version);
 
@@ -69,7 +69,7 @@ class Newsletter_Module extends Module {
         // Not necessary for Newsletter
     }
 
-    public function onPageLoad(User $user, Pages $pages, Cache $cache, Smarty $smarty, $navs, Widgets $widgets, ?TemplateBase $template) {
+    public function onPageLoad($user, $pages, $cache, $smarty, $navs, $widgets, $template) {
         // Permissions
         PermissionHandler::registerPermissions('Newsletter', [
             'admincp.newsletter' => $this->_language->get('moderator', 'staff_cp')  . ' &raquo; ' .  $this->_newsletter_language->get('general', 'newsletter')
@@ -77,7 +77,7 @@ class Newsletter_Module extends Module {
 
 		// Widgets
 		require_once(ROOT_PATH . '/modules/Newsletter/widgets/NewsletterWidget.php');
-		$widgets->add(new NewsletterWidget($smarty, $this->_language, $cache));
+		$widgets->add(new NewsletterWidget($template->getEngine()));
 
         if (defined('BACK_END')) {
             if ($user->hasPermission('admincp.newsletter')) {
@@ -101,7 +101,7 @@ class Newsletter_Module extends Module {
                 $navs[2]->add('newsletter_subscribers', $this->_newsletter_language->get('general', 'subscribers'), URL::build('/panel/newsletter/subscribers'), 'top', null, $order + 0.2, $icon);
             }
         } else {
-            $smarty->assign([
+            $template->getEngine()->addVariables([
                 'NEWSLETTER_TOKEN' => Token::get(),
                 'NEWSLETTER' => $this->_newsletter_language->get('general', 'newsletter'),
                 'NEWSLETTER_SUBSCRIBE_LINK' => URL::build('/newsletter/subscribe'),
@@ -127,7 +127,7 @@ class Newsletter_Module extends Module {
 
                 $update_check = json_decode($update_check);
                 if (!isset($update_check->error) && !isset($update_check->no_update) && isset($update_check->new_version)) {  
-                    $smarty->assign(array(
+                    $template->getEngine()->addVariables([
                         'NEW_UPDATE' => (isset($update_check->urgent) && $update_check->urgent == 'true') ? $this->_newsletter_language->get('general', 'new_urgent_update_available_x', ['module' => $this->getName()]) : $this->_newsletter_language->get('general', 'new_update_available_x', ['module' => $this->getName()]),
                         'NEW_UPDATE_URGENT' => (isset($update_check->urgent) && $update_check->urgent == 'true'),
                         'CURRENT_VERSION' => $this->_newsletter_language->get('general', 'current_version_x', [
@@ -138,7 +138,7 @@ class Newsletter_Module extends Module {
                         ]),
                         'NAMELESS_UPDATE' => $this->_newsletter_language->get('general', 'view_resource'),
                         'NAMELESS_UPDATE_LINK' => Output::getClean($update_check->link)
-                    ));
+                    ]);
                 }
             }
         }

@@ -39,7 +39,7 @@ if (isset($_GET['c'])) {
     Redirect::to(URL::build('/'));
 }
 
-$smarty->assign([
+$template->getEngine()->addVariables([
     'NEWSLETTER' => $newsletter_language->get('general', 'newsletter'),
     'UNSUBSCRIBE' => $newsletter_language->get('general', 'unsubscribe'),
     'TOKEN' => Token::get(),
@@ -54,4 +54,4 @@ require(ROOT_PATH . '/core/templates/navbar.php');
 require(ROOT_PATH . '/core/templates/footer.php');
 
 // Display template
-$template->displayTemplate('newsletter/unsubscribe.tpl', $smarty);
+$template->displayTemplate('newsletter/unsubscribe');

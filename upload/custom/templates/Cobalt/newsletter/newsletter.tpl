@@ -1,4 +1,5 @@
-{include file='header.tpl'} {include file='navbar.tpl'}
+{include file='header.tpl'}
+{include file='navbar.tpl'}
 <div class="container">
     <div class="row">
         {if count($WIDGETS_LEFT)}
