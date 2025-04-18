@@ -2,7 +2,7 @@
 The Newsletter module allows users and guests to subscribe to your newsletter so you can send they emails and alerts with new updates!
 
 ## Requirements
-- NamelessMC version 2.1.x
+- NamelessMC version 2.2.x
 
 ## Installation
 - Upload the contents of the **upload** directory straight into your NamelessMC installation's directory
